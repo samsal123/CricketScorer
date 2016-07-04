@@ -1,0 +1,17 @@
+#
+# generated on 2016/07/02 09:52:37
+#
+# --table-start--
+dataClass=data.Team
+tableName=team
+# --table-fields-start--
+# --field-start--
+fieldName=TeamID
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=teamName
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
