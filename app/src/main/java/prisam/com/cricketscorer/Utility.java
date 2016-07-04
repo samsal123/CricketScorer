@@ -20,10 +20,4 @@ public class Utility {
         }
         return result;
     }
-
-    public static void test()
-    {
-
-    }
-
 }
