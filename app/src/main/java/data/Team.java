@@ -9,21 +9,7 @@ import java.io.Serializable;
  */
 public class Team implements Serializable {
 
-    public int getTeamID() {
-        return TeamID;
-    }
 
-    public void setTeamID(int teamID) {
-        TeamID = teamID;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
 
     @DatabaseField(generatedId = true)
     public int TeamID;

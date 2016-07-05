@@ -25,11 +25,12 @@ import data.Team;
 public class ManageTeamActvity extends AppCompatActivity {
 
     private DataBaseHelper dataBaseHelper = null;
-    private Dao<Team, Integer> teamDao = null;
+    public Dao<Team, Integer> teamDao = null;
     private EditText teamName;
     private Button addTeam;
-    private ListView teamView;
-    private LinearLayout displayTeam;
+    public ListView teamView;
+
+
 
 
     @Override
@@ -68,7 +69,7 @@ public class ManageTeamActvity extends AppCompatActivity {
 
     }
 
-    private void createTeamDao() {
+    public void createTeamDao() {
         try {
             teamDao = getHelper().getTeamDao();
 
@@ -76,9 +77,10 @@ public class ManageTeamActvity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void showTeams() {
+    public void showTeams() {
 
 
         try {
@@ -88,7 +90,7 @@ public class ManageTeamActvity extends AppCompatActivity {
 
 
 
-            ArrayAdapter a = new ArrayAdapter(ManageTeamActvity.this, android.R.layout.simple_list_item_1, Utility.getData(teams));
+            TeamAdapter a = new TeamAdapter(ManageTeamActvity.this, (ArrayList<Team>) teams);
 
 
 
@@ -123,67 +125,26 @@ public class ManageTeamActvity extends AppCompatActivity {
         teamName = (EditText) findViewById(R.id.editText);
         addTeam = (Button) findViewById(R.id.btnAddTeam);
         teamView = (ListView) findViewById(R.id.listView);
-        displayTeam = (LinearLayout)findViewById(R.id.linear1);
-
-        teamView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                TextView v = (TextView)view;
-
-                msg(v.getText().toString());
-                showDialog(v);
-
-
-
-                showTeams();
-
-            }
-        });
 
 
     }
 
-    public void showDialog(final View view){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        TextView v= (TextView)view;
-        alertDialogBuilder.setMessage("Team  " +v.getText().toString());
 
-        alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                deleteTeam((TextView) view);
-                showTeams();
 
+        public void deleteTeam(TextView v) {
+            DeleteBuilder<Team,Integer> deleteBuilder = teamDao.deleteBuilder();
+            try {
+                deleteBuilder.where().eq("teamName",v.getText().toString());
+                deleteBuilder.delete();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        });
-        alertDialogBuilder.setNegativeButton("Edit",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Intent newint = new Intent(ManageTeamActvity.this,AddPlayersToTeam.class);
-
-                newint.putExtra("TeamName",((TextView) view).getText());
-
-                startActivity(newint);
-
-            }
-        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
 
 
 
-    private void deleteTeam(TextView v) {
-        DeleteBuilder<Team,Integer> deleteBuilder = teamDao.deleteBuilder();
-        try {
-            deleteBuilder.where().eq("teamName",v.getText().toString());
-            deleteBuilder.delete();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+
         }
-    }
 
 
     private void msg(String s) {
