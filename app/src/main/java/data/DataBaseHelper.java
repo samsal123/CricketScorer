@@ -1,6 +1,7 @@
 package data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -23,6 +24,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private Dao<Team,Integer> teamDao;
+    private Dao<Player,Integer> playerDao;
+
 
 
     public DataBaseHelper(Context context) {
@@ -35,10 +38,11 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
             TableUtils.createTable(connectionSource,Team.class);
+            TableUtils.createTable(connectionSource,Player.class);
         } catch (SQLException e)
         {
           Log.e(DataBaseHelper.class.getName(),"Unable to create database",e);
-            // e.printStackTrace();
+             //e.printStackTrace();
         }
 
 
@@ -49,9 +53,10 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
             TableUtils.dropTable(connectionSource,Team.class,true);
+            TableUtils.dropTable(connectionSource,Player.class,true);
             onCreate(database,connectionSource);
         } catch (SQLException e) {
-            //e.printStackTrace();
+           // e.printStackTrace();
             Log.e(DataBaseHelper.class.getName(),"Unable to upgrade database from version ",e);
         }
     }
@@ -64,6 +69,16 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
 
         return teamDao;
+    }
+
+    public Dao<Player,Integer> getPlayerDao() throws SQLException
+    {
+        if(playerDao == null)
+        {
+            playerDao=getDao(Player.class);
+        }
+
+       return playerDao;
     }
 
 

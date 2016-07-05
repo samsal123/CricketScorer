@@ -14,7 +14,8 @@ public class DataBaseConfigUtil extends OrmLiteConfigUtil {
     /**
      * classes represents the models to use for generating the ormlite_config.txt file
      */
-    private static final Class<?>[] classes = new Class[] {Team.class};
+    private static final Class<?>[] classes = new Class[] {Team.class,Player.class};
+
 
     /**
      * Given that this is a separate program from the android app, we have to use

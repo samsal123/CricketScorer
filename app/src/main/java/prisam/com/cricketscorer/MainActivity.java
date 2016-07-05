@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button manageTeam;
     private Button connectBt;
+    private Button addplayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addplayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent newint = new Intent(MainActivity.this,AddPlayersToTeam.class);
+
+                startActivity(newint);
+            }
+        });
+
 
 
     }
@@ -36,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         manageTeam = (Button)findViewById(R.id.btnManageTeam);
         connectBt = (Button)findViewById(R.id.btnConnect);
+        addplayer = (Button)findViewById(R.id.btnaddplayeractivity);
 
     }
 }

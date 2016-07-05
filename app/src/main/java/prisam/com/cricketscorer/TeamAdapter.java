@@ -80,6 +80,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
                 getContext().startActivity(newint);
 
 
+
             }
         });
 
