@@ -1,4 +1,5 @@
 package prisam.com.cricketscorer;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,7 +89,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         return convertView;}
 
     public void showDialog(final View view){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         TextView v= (TextView)view;
         alertDialogBuilder.setMessage("Are you sure Delete the team  " +v.getText().toString());
 
@@ -103,11 +104,11 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNeutralButton("Cancel",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-               clear();
+
 
             }
         });
