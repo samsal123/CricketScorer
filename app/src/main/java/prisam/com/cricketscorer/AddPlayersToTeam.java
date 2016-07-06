@@ -19,7 +19,7 @@ import java.util.List;
 import data.DataBaseHelper;
 import data.Player;
 
-public class AddPlayersToTeam extends AppCompatActivity implements PlayerAdapter.PlayerAdapterCallBack{
+public class AddPlayersToTeam extends AppCompatActivity {
 
 
     private DataBaseHelper dataBaseHelper = null;
@@ -32,7 +32,7 @@ public class AddPlayersToTeam extends AppCompatActivity implements PlayerAdapter
     TextView playerTeam;
     Button refresh;
     int teamID;
-    PlayerAdapter a1;
+   public PlayerAdapter a1;
     List<Player> playerdblist;
 
     @Override
@@ -126,7 +126,6 @@ public class AddPlayersToTeam extends AppCompatActivity implements PlayerAdapter
 
     public void showPlayers() {
 
-
         try {
 
          playerdblist = playerDao.queryForAll();
@@ -142,11 +141,6 @@ public class AddPlayersToTeam extends AppCompatActivity implements PlayerAdapter
 
     public void deletePlayer(int id) {
 
-
-    }
-
-    @Override
-    public void deletePressed(int id) {
         DeleteBuilder<Player,Integer> deleteBuilder = playerDao.deleteBuilder();
         try {
             deleteBuilder.where().eq("PlayerID",id);
@@ -154,8 +148,15 @@ public class AddPlayersToTeam extends AppCompatActivity implements PlayerAdapter
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        showPlayers();
+
+
+
+
     }
+
+
+
+
 
     //private void msg(String s) {
 //        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
