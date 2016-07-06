@@ -17,13 +17,13 @@
             android:id="@+id/editText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/btnAddTeam"
-            android:layout_toStartOf="@+id/btnAddTeam" />
+            android:layout_toLeftOf="@+id/refresh"
+            android:layout_toStartOf="@+id/refresh" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnAddTeam"
+            android:id="@+id/refresh"
             android:background="@android:drawable/ic_input_add"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -49,5 +49,5 @@
         android:id="@+id/listView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnAddTeam" />
+        android:layout_below="@+id/refresh" />
 </LinearLayout>

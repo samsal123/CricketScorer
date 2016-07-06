@@ -33,6 +33,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
     Button btnDelete;
     Button btnEdit;
+    Team team;
 
     private DataBaseHelper dataBaseHelper = null;
     public Dao<Team, Integer> teamDao = null;
@@ -44,7 +45,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
         manageTeamActvity.createTeamDao();
         // Get the data item for this position
-        Team team = getItem(position);
+         team = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_view, parent, false);
@@ -76,6 +77,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
                 Intent newint=new Intent(getContext(),AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 newint.putExtra("TeamName",(teamName.getText()));
+                newint.putExtra ("TeamID",team.TeamID);
 
                 getContext().startActivity(newint);
 
@@ -97,7 +99,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                manageTeamActvity.deleteTeam((TextView) view);
+                manageTeamActvity.deleteTeam(team.TeamID);
 
 
 

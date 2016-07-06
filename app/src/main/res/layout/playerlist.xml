@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/txtListTeamName"
+                android:id="@+id/txtPlayertTeamName"
                 android:layout_weight="0.14" />
         </LinearLayout>
 

@@ -20,4 +20,11 @@ public class Utility {
         }
         return result;
     }
+
+    public static void displayPlayers(){
+
+        AddPlayersToTeam adp = new AddPlayersToTeam();
+
+        adp.showPlayers();
+    }
 }

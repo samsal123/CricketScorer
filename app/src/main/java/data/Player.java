@@ -17,15 +17,21 @@ public class Player implements Serializable {
     @DatabaseField
     public String firstName;
 
-    //@DatabaseField(columnName = "LastName")
-   // public String lastName;
+    @DatabaseField
+    public String lastName;
 
-    //@DatabaseField(canBeNull = true,foreign = true,columnName = "TeamID")
-    //public int playerTeamID;
+    @DatabaseField
+    public int playerTeamID;
 
-    public Player( String firstName) {
-       // this.lastName = lastName;
+    public Player( String firstName,String lastName,int playerTeamID) {
+        this.lastName = lastName;
         this.firstName = firstName;
+        this.playerTeamID = playerTeamID;
+    }
+
+    public Player(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Player() {
