@@ -1,6 +1,7 @@
 package prisam.com.cricketscorer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     TextView txtPlayerName;
     TextView txtTeam;
     Player player;
-    private PlayerAdapterCallBack callback;
+
 
 
 
@@ -70,11 +71,11 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             @Override
             public void onClick(View view) {
 
-                if(callback != null) {
+                addActivity.deletePlayer(player.playerId);
 
-                    callback.deletePressed(player.playerId);
-                }
+                Intent newint=new Intent(getContext(),AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                getContext().startActivity(newint);
 
             }
         });
@@ -82,18 +83,6 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
 
         return convertView;}
-
-    public void setCallback(PlayerAdapterCallBack callback){
-
-        this.callback = callback;
-    }
-    public interface PlayerAdapterCallBack {
-
-        public void deletePressed(int position);
-    }
-
-
-
 
 
     private void msg(String s) {

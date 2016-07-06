@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ManageTeamActvity" />
-        <activity android:name=".AddPlayersToTeam"></activity>
+        <activity android:name=".AddPlayersToTeam">
+
+        </activity>
     </application>
 
 </manifest>
