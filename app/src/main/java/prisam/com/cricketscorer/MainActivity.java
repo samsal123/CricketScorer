@@ -38,9 +38,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        connectBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent newint = new Intent(MainActivity.this,DeviceList.class);
+                startActivity(newint);
+            }
+        });
+
 
 
     }
+
+
 
     public void initialiseControls(){
 

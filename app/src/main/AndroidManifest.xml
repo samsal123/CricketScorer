@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="prisam.com.cricketscorer">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,9 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ManageTeamActvity" />
-        <activity android:name=".AddPlayersToTeam"/>
-        <activity android:name="prisam.com.cricketscorer.AndroidDatabaseManager" android:theme="@style/Theme.AppCompat.Light"/>
-
+        <activity android:name=".AddPlayersToTeam" />
+        <activity
+            android:name=".AndroidDatabaseManager"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".DeviceList"></activity>
     </application>
 
 </manifest>
