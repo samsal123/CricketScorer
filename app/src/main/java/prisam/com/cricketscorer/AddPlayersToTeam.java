@@ -19,7 +19,7 @@ import java.util.List;
 import data.DataBaseHelper;
 import data.Player;
 
-public class AddPlayersToTeam extends AppCompatActivity {
+public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClickListener {
 
 
     private DataBaseHelper dataBaseHelper = null;
@@ -32,8 +32,15 @@ public class AddPlayersToTeam extends AppCompatActivity {
     TextView playerTeam;
     Button refresh;
     int teamID;
+    Player editPlayer;
    public PlayerAdapter a1;
     List<Player> playerdblist;
+
+    @Override
+    public void OnCustomClick(View aView, int position) {
+        deletePlayer(position);
+        //Toast.makeText(this, teamName.getText(), Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +102,12 @@ public class AddPlayersToTeam extends AppCompatActivity {
 
         playerTeam.setText(newint.getStringExtra("TeamName"));
       teamID = newint.getIntExtra("TeamID",0);
+        editPlayer = (Player) newint.getSerializableExtra("Player");
+        if (editPlayer!=null)
+        {
+            firstName.setText(editPlayer.firstName);
+            lastName.setText(editPlayer.lastName);
+        }
     }
 
 
@@ -129,7 +142,8 @@ public class AddPlayersToTeam extends AppCompatActivity {
         try {
 
          playerdblist = playerDao.queryForAll();
-            a1 = new PlayerAdapter(AddPlayersToTeam.this, (ArrayList<Player>) playerdblist);
+
+            a1 = new PlayerAdapter(AddPlayersToTeam.this,(ArrayList<Player>) playerdblist,this);
             playerList.setAdapter(a1);
 
         } catch (SQLException e) {

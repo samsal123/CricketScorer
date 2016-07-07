@@ -1,7 +1,9 @@
 package prisam.com.cricketscorer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,63 +29,103 @@ import data.Team;
  */
 public class PlayerAdapter extends ArrayAdapter<Player> {
 
-    public PlayerAdapter(Context context, ArrayList<Player>players){
-        super(context, 0, players);}
+
 
     Button btnDelete;
     Button btnEdit;
-    TextView txtPlayerName;
-    TextView txtTeam;
+    TextView playerName;
+    TextView playerTeam;
     Player player;
+    private ArrayList<Player> players;
 
 
+    private LayoutInflater mInflater;
+    private OnCustomClickListener callback;
 
+    public PlayerAdapter(Context context, ArrayList<Player> players, OnCustomClickListener callback) {
+        super(context, 0, players);
+        mInflater = LayoutInflater.from(context);
+        this.callback = callback;
+        this.players = players;
+    }
 
-  AddPlayersToTeam addActivity = new AddPlayersToTeam();
+    // View lookup cache
+    private static class ViewHolder {
+        TextView name;
+    }
+
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-        addActivity.createPlayerDao();
         // Get the data item for this position
-         player = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
+        player = getItem(position);
+
+        ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.playerlist, parent, false);
+            viewHolder = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.playerlist,null);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.textView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Lookup view for data population
-         txtPlayerName = (TextView) convertView.findViewById(R.id.listPlayerName);
-        txtTeam  = (TextView) convertView.findViewById(R.id.txtPlayertTeamName);
+        initialiseControls(convertView);
 
-
-
-        // Populate the data into the template view using the data object
-       txtPlayerName.setText(player.firstName+ " "+player.lastName);
-        txtTeam.setText(player.playerTeamID+"");
-
-
-        btnDelete = (Button)convertView.findViewById(R.id.del);
-        btnEdit = (Button)convertView.findViewById(R.id.edit);
+        // set the text for the team name
+        playerTeam.setText(player.playerTeamID+"");
+        playerName.setText(player.firstName+" "+player.lastName);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                addActivity.deletePlayer(player.playerId);
-
-                Intent newint=new Intent(getContext(),AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                getContext().startActivity(newint);
-
+                showDialog(playerName, position);
             }
         });
 
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                addPlayersToTeamIntent.putExtra("Player", player);
+                getContext().startActivity(addPlayersToTeamIntent);
+            }
+        });
 
+        // Return the completed view to render on screen
+        return convertView;
+    }
 
-        return convertView;}
+    public void showDialog(final View view, final int position) {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setMessage("Are you sure to delete  '" + getItem(position).firstName + " "+getItem(position).lastName+"' ?");
 
+        alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                callback.OnCustomClick(view, getItem(position).playerId);
+                players.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+        alertDialogBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void initialiseControls(View convertView){
+        playerTeam = (TextView) convertView.findViewById(R.id.txtPlayertTeamName);
+        playerName = (TextView)convertView.findViewById(R.id.listPlayerName);
+        btnDelete = (Button) convertView.findViewById(R.id.del);
+        btnEdit = (Button) convertView.findViewById(R.id.edit);
+    }
 
     private void msg(String s) {
         Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
