@@ -2,10 +2,9 @@ package prisam.com.cricketscorer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
 
         try {
 
-         playerdblist = playerDao.queryForAll();
+         playerdblist = playerDao.query(queryforPlayers(teamID));
 
             a1 = new PlayerAdapter(AddPlayersToTeam.this,(ArrayList<Player>) playerdblist,this);
             playerList.setAdapter(a1);
@@ -189,11 +190,20 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
         }
 
 
-
-
     }
+    private PreparedQuery<Player> queryforPlayers(int id) {
 
+        QueryBuilder<Player, Integer> qb = playerDao.queryBuilder();
+        PreparedQuery<Player> ppq = null;
+        try {
+            qb.where().eq("playerTeamID", id);
+            ppq = qb.prepare();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return ppq;
+    }
 
 
 

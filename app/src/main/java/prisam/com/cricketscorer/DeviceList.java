@@ -1,8 +1,10 @@
 package prisam.com.cricketscorer;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 
-public class DeviceList extends ActionBarActivity
+public class DeviceList extends AppCompatActivity
 {
     //widgets
     Button btnPaired;
@@ -97,10 +97,8 @@ public class DeviceList extends ActionBarActivity
             // Get the device MAC address, the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
-
             // Make an intent to start next activity.
-            Intent i = new Intent(DeviceList.this, MainActivity.class);
-
+            Intent i = new Intent(DeviceList.this, ScoreAndControlDisplay.class);
             //Change the activity.
             i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
             startActivity(i);

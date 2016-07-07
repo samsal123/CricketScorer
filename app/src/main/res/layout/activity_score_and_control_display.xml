@@ -1,0 +1,284 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/battingTeamText"
+        android:textAlignment="center"
+        android:layout_gravity="center" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1">
+        <TextView
+            android:text="Team Total"
+            android:layout_width="112.0dp"
+            android:layout_height="28.0dp"
+            android:id="@+id/textView1"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="118.0dp"
+            android:layout_height="38.5dp"
+            android:id="@+id/txtTotal" />
+        <TextView
+            android:text="Overs"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/txtView2"
+            android:textColor="@android:color/holo_red_dark" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="86.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtOvers" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout7">
+        <TextView
+            android:text="Striker"
+            android:layout_width="112.0dp"
+            android:layout_height="28.0dp"
+            android:id="@+id/striker"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="118.0dp"
+            android:layout_height="38.5dp"
+            android:id="@+id/txtStrikerRuns" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="86.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtStrikerBalls" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout8">
+        <TextView
+            android:text="Non Striker"
+            android:layout_width="112.0dp"
+            android:layout_height="28.0dp"
+            android:id="@+id/nonStriker"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="118.0dp"
+            android:layout_height="38.5dp"
+            android:id="@+id/txtNonStrikerRuns" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="86.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtNonStrikerBalls" />
+
+    </LinearLayout>
+    <Button
+        android:text="dot ball"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:id="@+id/btnDotBall" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2">
+        <Button
+            android:text="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn1Run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space1" />
+        <Button
+            android:text="2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn2Run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space9" />
+        <Button
+            android:text="3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn3Run" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout5">
+        <Button
+            android:text="4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn4Run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space8" />
+        <Button
+            android:text="5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn5Run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space7" />
+        <Button
+            android:text="6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btn6Run" />
+    </LinearLayout>
+    <Button
+        android:text="Wicket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:id="@+id/btnWicket" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3">
+        <Button
+            android:text="run +"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnAdd1run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space6" />
+        <Button
+            android:text="ball +"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnAdd1ball" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space5" />
+        <Button
+            android:text="Wicket +"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnAdd1w" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout4">
+        <Button
+            android:text="run -"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnMinus1run" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space4" />
+        <Button
+            android:text="Ball -"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnMinus1ball" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/space3" />
+        <Button
+            android:text="Wicket -"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="btnClick"
+            android:id="@+id/btnMinus1w" />
+    </LinearLayout>
+    <Button
+        android:text="Refresh Score Board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:id="@+id/btnRefresh" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Disconnect"
+        android:id="@+id/button4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+

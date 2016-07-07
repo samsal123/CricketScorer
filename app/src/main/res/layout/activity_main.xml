@@ -23,6 +23,12 @@
         android:text="DB View"
         android:id="@+id/dbView" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="open Match"
+        android:id="@+id/btnMatch" />
+
 </LinearLayout>
 
 

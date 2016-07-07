@@ -75,8 +75,8 @@ public class TeamAdapter extends ArrayAdapter<Team> {
             @Override
             public void onClick(View view) {
                 Intent addPlayersToTeamIntent = new Intent(context, AddPlayersToTeam.class);//.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                addPlayersToTeamIntent.putExtra("TeamName", team.teamName);
-                addPlayersToTeamIntent.putExtra("TeamID", team.TeamID);
+                addPlayersToTeamIntent.putExtra("TeamName", getItem(position).teamName);
+                addPlayersToTeamIntent.putExtra("TeamID",getItem(position).TeamID);
                 context.startActivity(addPlayersToTeamIntent);
             }
         });
