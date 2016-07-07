@@ -1,9 +1,12 @@
 package prisam.com.cricketscorer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,8 +36,10 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
     Button refresh;
     int teamID;
     Player editPlayer;
+    Button back;
    public PlayerAdapter a1;
     List<Player> playerdblist;
+    InputMethodManager imm;
 
     @Override
     public void OnCustomClick(View aView, int position) {
@@ -52,6 +57,12 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
         initialiseControls();
         showPlayers();
         a1.notifyDataSetChanged();
+
+        hideKeyBoard();
+
+       // getWindow().setSoftInputMode(
+               // WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+       // );
 
 
 
@@ -72,8 +83,7 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
                 }
 
                 showPlayers();
-
-
+                hideKeyBoard();
 
             }
         });
@@ -87,7 +97,21 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newint = new Intent(AddPlayersToTeam.this,ManageTeamActvity.class);
+                startActivity(newint);
+            }
+        });
 
+
+    }
+
+    private void hideKeyBoard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(lastName.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 
     private void initialiseControls() {
@@ -97,6 +121,7 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
         lastName = (TextView)findViewById(R.id.txtlastname);
         playerList = (ListView)findViewById(R.id.listView2);
         refresh = (Button)findViewById(R.id.refresh);
+        back = (Button)findViewById(R.id.btnGoBack);
 
         Intent newint = getIntent();
 

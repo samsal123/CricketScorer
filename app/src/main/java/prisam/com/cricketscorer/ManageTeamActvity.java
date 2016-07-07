@@ -1,9 +1,12 @@
 package prisam.com.cricketscorer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,6 +31,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
     private EditText teamName;
     private Button addTeam;
     public ListView teamView;
+    private Button back;
 
     @Override
     public void OnCustomClick(View aView, int position) {
@@ -42,6 +46,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
 
         createTeamDao();
         initialiseControls();
+        hideKeyBoard();
 
         addTeam.setOnClickListener(new OnClickListener() {
             @Override
@@ -54,7 +59,18 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                hideKeyBoard();
                 showTeams();
+            }
+        });
+
+        back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent newint = new Intent(ManageTeamActvity.this,MainActivity.class);
+                startActivity(newint);
+
             }
         });
 
@@ -69,6 +85,12 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
             e.printStackTrace();
         }
 
+    }
+
+    private void hideKeyBoard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(teamName.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 
     public void showTeams() {
@@ -105,6 +127,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         teamName = (EditText) findViewById(R.id.editText);
         addTeam = (Button) findViewById(R.id.refresh);
         teamView = (ListView) findViewById(R.id.listView);
+        back = (Button)findViewById(R.id.back);
 
     }
 
