@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private Button manageTeam;
     private Button connectBt;
     private Button addplayer;
+    private Button dbView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent newint = new Intent(MainActivity.this,AddPlayersToTeam.class);
-
                 startActivity(newint);
+
+            }
+        });
+
+        dbView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent dbmanager = new Intent(MainActivity.this,AndroidDatabaseManager.class);
+                startActivity(dbmanager);
             }
         });
 
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         manageTeam = (Button)findViewById(R.id.btnManageTeam);
         connectBt = (Button)findViewById(R.id.btnConnect);
         addplayer = (Button)findViewById(R.id.btnaddplayeractivity);
+        dbView = (Button)findViewById(R.id.dbView);
 
     }
 }
