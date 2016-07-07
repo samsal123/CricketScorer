@@ -25,12 +25,14 @@ public class TeamAdapter extends ArrayAdapter<Team> {
     private TextView teamName;
     private ArrayList<Team> teams;
 
+    private Context context;
     private LayoutInflater mInflater;
     private OnCustomClickListener callback;
 
     public TeamAdapter(Context context, ArrayList<Team> teams, OnCustomClickListener callback) {
         super(context, 0, teams);
         mInflater = LayoutInflater.from(context);
+        this.context = context;
         this.callback = callback;
         this.teams = teams;
     }
@@ -71,10 +73,10 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent addPlayersToTeamIntent = new Intent(context, AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 addPlayersToTeamIntent.putExtra("TeamName", team.teamName);
                 addPlayersToTeamIntent.putExtra("TeamID", team.TeamID);
-                getContext().startActivity(addPlayersToTeamIntent);
+                context.startActivity(addPlayersToTeamIntent);
             }
         });
 
