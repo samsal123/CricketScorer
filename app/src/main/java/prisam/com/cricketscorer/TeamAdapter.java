@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import com.j256.ormlite.dao.Dao;
 import java.util.ArrayList;
-import data.DataBaseHelper;
+
 import data.Team;
 
 /**
@@ -20,45 +19,47 @@ import data.Team;
  */
 public class TeamAdapter extends ArrayAdapter<Team> {
 
-
-    private ArrayList<Team> teams;
+    private Team team;
     private Button btnDelete;
     private Button btnEdit;
     private TextView teamName;
-    private Team team;
+    private ArrayList<Team> teams;
 
+    private LayoutInflater mInflater;
     private OnCustomClickListener callback;
-    private DataBaseHelper dataBaseHelper = null;
-    public Dao<Team, Integer> teamDao = null;
-    //ManageTeamActvity manageTeamActvity = new ManageTeamActvity();
 
     public TeamAdapter(Context context, ArrayList<Team> teams, OnCustomClickListener callback) {
         super(context, 0, teams);
+        mInflater = LayoutInflater.from(context);
         this.callback = callback;
         this.teams = teams;
+    }
+
+    // View lookup cache
+    private static class ViewHolder {
+        TextView name;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        //manageTeamActvity.createTeamDao();
         // Get the data item for this position
         team = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
+
+        ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_view, parent, false);
+            viewHolder = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.listitem_view, null);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.textView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Lookup view for data population
-        teamName = (TextView) convertView.findViewById(R.id.textView);
+        initialiseControls(convertView);
 
-        // Populate the data into the template view using the data object
+        // set the text for the team name
         teamName.setText(team.teamName);
-
-        btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
-        btnEdit = (Button) convertView.findViewById(R.id.btnEdit);
-
-        //btnDelete.setOnClickListener(new CustomOnClickListener(callback, position));
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +71,10 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent newint = new Intent(getContext(), AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                newint.putExtra("TeamName", (teamName.getText()));
-                newint.putExtra("TeamID", team.TeamID);
-                getContext().startActivity(newint);
-
+                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                addPlayersToTeamIntent.putExtra("TeamName", team.teamName);
+                addPlayersToTeamIntent.putExtra("TeamID", team.TeamID);
+                getContext().startActivity(addPlayersToTeamIntent);
             }
         });
 
@@ -85,13 +84,11 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
     public void showDialog(final View view, final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        TextView v = (TextView) view;
-        alertDialogBuilder.setMessage("Are you sure Delete the team  " + getItem(position).teamName);
+        alertDialogBuilder.setMessage("Are you sure to delete the selected team  '" + getItem(position).teamName + "'");
 
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //manageTeamActvity.deleteTeam(team.TeamID);
                 callback.OnCustomClick(view, getItem(position).TeamID);
                 teams.remove(position);
                 notifyDataSetChanged();
@@ -105,6 +102,12 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void initialiseControls(View convertView){
+        teamName = (TextView) convertView.findViewById(R.id.textView);
+        btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
+        btnEdit = (Button) convertView.findViewById(R.id.btnEdit);
     }
 }
 

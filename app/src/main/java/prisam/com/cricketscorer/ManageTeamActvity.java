@@ -75,7 +75,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         try {
 
             List<Team> teams = teamDao.queryForAll();
-            TeamAdapter a = new TeamAdapter(ManageTeamActvity.this, (ArrayList<Team>) teams, (OnCustomClickListener) this);
+            TeamAdapter a = new TeamAdapter(ManageTeamActvity.this, (ArrayList<Team>) teams, this);
             teamView.setAdapter(a);
 
         } catch (SQLException e) {
@@ -98,7 +98,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
             OpenHelperManager.releaseHelper();
             dataBaseHelper = null;
         }
-
     }
 
     private void initialiseControls() {
@@ -108,7 +107,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         teamView = (ListView) findViewById(R.id.listView);
 
     }
-
 
     public void deleteTeam(int teamID) {
         DeleteBuilder<Team, Integer> deleteBuilder = teamDao.deleteBuilder();
@@ -120,7 +118,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         }
 
     }
-
 
     private void msg(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
