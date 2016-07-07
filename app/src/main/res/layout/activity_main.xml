@@ -23,6 +23,12 @@
         android:text="Add Player"
         android:id="@+id/btnaddplayeractivity" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DB View"
+        android:id="@+id/dbView" />
+
 </LinearLayout>
 
 
