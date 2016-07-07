@@ -29,6 +29,12 @@
         android:text="open Match"
         android:id="@+id/btnMatch" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MatchSetup"
+        android:id="@+id/matchSetup" />
+
 </LinearLayout>
 
 

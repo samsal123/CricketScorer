@@ -69,8 +69,6 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
             isStriker = true;
             selectBatsmen();
 
-
-
         }
 
 
@@ -79,7 +77,6 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
 
         {
             selectBatsmen();
-
 
         }
 

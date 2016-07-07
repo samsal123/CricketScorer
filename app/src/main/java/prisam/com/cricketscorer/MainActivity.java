@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Button connectBt;
     private Button dbView;
     private Button gotoMatch;
+    private Button matchSetup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        matchSetup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent matchsetup = new Intent(MainActivity.this,CreateMatch.class);
+                startActivity(matchsetup);
+            }
+        });
+
 
 
     }
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         connectBt = (Button)findViewById(R.id.btnConnect);
         dbView = (Button)findViewById(R.id.dbView);
         gotoMatch = (Button)findViewById(R.id.btnMatch);
+        matchSetup = (Button)findViewById(R.id.matchSetup);
 
     }
 
