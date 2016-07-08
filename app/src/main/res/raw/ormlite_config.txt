@@ -1,5 +1,5 @@
 #
-# generated on 2016/07/06 12:28:43
+# generated on 2016/07/08 09:47:11
 #
 # --table-start--
 dataClass=data.Team
@@ -11,6 +11,12 @@ generatedId=true
 # --field-end--
 # --field-start--
 fieldName=teamName
+# --field-end--
+# --field-start--
+fieldName=toss
+# --field-end--
+# --field-start--
+fieldName=isBat
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -31,6 +37,41 @@ fieldName=lastName
 # --field-end--
 # --field-start--
 fieldName=playerTeamID
+# --field-end--
+# --field-start--
+fieldName=playing
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=data.Match
+tableName=match
+# --table-fields-start--
+# --field-start--
+fieldName=matchID
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=matchDateTime
+# --field-end--
+# --field-start--
+fieldName=matchVenue
+# --field-end--
+# --field-start--
+fieldName=homeTeamID
+# --field-end--
+# --field-start--
+fieldName=awayTeamID
+# --field-end--
+# --field-start--
+fieldName=matchOvers
+# --field-end--
+# --field-start--
+fieldName=matchInns
+# --field-end--
+# --field-start--
+fieldName=matchDays
 # --field-end--
 # --table-fields-end--
 # --table-end--

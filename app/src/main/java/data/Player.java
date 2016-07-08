@@ -22,17 +22,16 @@ public class Player implements Serializable {
 
     @DatabaseField
     public int playerTeamID;
+    @DatabaseField
+    public boolean playing;
 
     public Player( String firstName,String lastName,int playerTeamID) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.playerTeamID = playerTeamID;
+
     }
 
-    public Player(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 
     public Player() {
     }

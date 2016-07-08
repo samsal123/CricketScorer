@@ -17,6 +17,11 @@ public class Team implements Serializable {
     @DatabaseField
     public String teamName;
 
+    @DatabaseField
+    public boolean toss;
+    @DatabaseField
+    public boolean isBat;
+
     public Team(String teamName) {
 
        this.teamName =teamName;

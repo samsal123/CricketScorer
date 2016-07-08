@@ -11,18 +11,18 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import data.DataBaseHelper;
+import data.Match;
 import data.Player;
 import data.Team;
 
@@ -33,11 +33,13 @@ public class CreateMatch extends AppCompatActivity {
     private Button selectAway;
     private Button startMatch;
     private Button back;
+    private ToggleButton option;
     private SeekBar toss;
-    private String homeTeam;
-    private String awayTeam;
     private DataBaseHelper dataBaseHelper = null;
     public Dao<Team, Integer> teamDao = null;
+    public Dao<Match,Integer> matchDao = null;
+    public Dao<Player,Integer> playerDao=null;
+
 
 
 
@@ -56,14 +58,14 @@ public class CreateMatch extends AppCompatActivity {
             public void onClick(View view) {
 
 
-              homeTeam =  alertDialog(view);
+              alertDialog(view);
 
             }
         });
         selectAway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               awayTeam =  alertDialog(view);
+               alertDialog(view);
 
 
             }
@@ -72,7 +74,9 @@ public class CreateMatch extends AppCompatActivity {
         startMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(homeTeam+awayTeam);
+
+
+
             }
         });
 
@@ -113,6 +117,7 @@ public class CreateMatch extends AppCompatActivity {
         selectHome= (Button)findViewById(R.id.selectHomeTeam);
         selectAway =(Button)findViewById(R.id.selectAwayTeam);
         startMatch = (Button)findViewById(R.id.matchStart);
+        option = (ToggleButton)findViewById(R.id.toggleButton);
         toss = (SeekBar)findViewById(R.id.seekBar);
         back = (Button)findViewById(R.id.backfromCreateMatch);
 
@@ -120,9 +125,9 @@ public class CreateMatch extends AppCompatActivity {
 
     }
 
-String strName;
 
-private String alertDialog(View v) {
+
+private void alertDialog(View v) {
 
     final Button b1 = (Button)v;
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(CreateMatch.this);
@@ -160,14 +165,14 @@ private String alertDialog(View v) {
             new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                     strName = arrayAdapter.getItem(which);
+                    String strName = arrayAdapter.getItem(which);
                     b1.setText(strName);
 
                 }
 
             });
     builderSingle.show();
-   return strName;
+
 
     }
 

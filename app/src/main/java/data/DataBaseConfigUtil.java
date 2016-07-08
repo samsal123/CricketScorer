@@ -14,7 +14,7 @@ public class DataBaseConfigUtil extends OrmLiteConfigUtil {
     /**
      * classes represents the models to use for generating the ormlite_config.txt file
      */
-    private static final Class<?>[] classes = new Class[] {Team.class,Player.class};
+    private static final Class<?>[] classes = new Class[] {Team.class,Player.class,Match.class};
 
 
     /**

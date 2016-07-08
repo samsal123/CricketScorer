@@ -1,7 +1,6 @@
 package data;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +8,6 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
-//import com.j256.ormlite.logger.Log;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -17,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import prisam.com.cricketscorer.R;
+
+//import com.j256.ormlite.logger.Log;
 
 /**
  * Created by Prince on 2/07/2016.
@@ -28,6 +28,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<Team,Integer> teamDao;
     private Dao<Player,Integer> playerDao;
+    private Dao<Match,Integer> matchDao;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -40,6 +41,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource,Team.class);
             TableUtils.createTable(connectionSource,Player.class);
+            TableUtils.createTable(connectionSource,Match.class);
         } catch (SQLException e)
         {
           Log.e(DataBaseHelper.class.getName(),"Unable to create database",e);
@@ -53,6 +55,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.dropTable(connectionSource,Team.class,true);
             TableUtils.dropTable(connectionSource,Player.class,true);
+            TableUtils.dropTable(connectionSource,Match.class,true);
             onCreate(database,connectionSource);
         } catch (SQLException e) {
            // e.printStackTrace();
@@ -79,6 +82,17 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
        return playerDao;
     }
+
+    public Dao<Match,Integer> getMatchDao() throws SQLException
+    {
+        if(playerDao == null)
+        {
+            playerDao=getDao(Player.class);
+        }
+
+        return matchDao;
+    }
+
 
     /*START ANDROID DATABASE MANAGER CODE*/
     public ArrayList<Cursor> getData(String Query){
