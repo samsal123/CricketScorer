@@ -15,6 +15,8 @@ import android.widget.ToggleButton;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -29,10 +31,16 @@ import data.Team;
 public class CreateMatch extends AppCompatActivity {
 
     private TextView timeDate;
+    private TextView matchVenue;
+    private TextView matchOvers;
+    private TextView matchInns;
+    private TextView matchDays;
     private Button selectHome;
     private Button selectAway;
     private Button startMatch;
     private Button back;
+    private List<Team> homeTeam;
+    private List<Team> awayTeam;
     private ToggleButton option;
     private SeekBar toss;
     private DataBaseHelper dataBaseHelper = null;
@@ -49,7 +57,7 @@ public class CreateMatch extends AppCompatActivity {
         setContentView(R.layout.activity_create_match);
 
         intializeCOntrols();
-        createTeamDao();
+       createAllDao();
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy   HH:mm ");
         timeDate.setText( sdf.format( new Date() ));
@@ -75,6 +83,32 @@ public class CreateMatch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
+                String matchDateTime = timeDate.getText().toString();
+                String matchPlace = matchVenue.getText().toString();
+                try {
+                    homeTeam = teamDao.query(queryforTeam(selectHome.getText().toString()));
+                   int  homeTeamID = homeTeam.get(0).TeamID;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                     awayTeam = teamDao.query(queryforTeam(selectAway.getText().toString()));
+                     int awayTeamID = awayTeam.get(0).TeamID;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                int matchOver = Integer.parseInt(matchOvers.getText().toString());
+                int matchInn = Integer.parseInt(matchInns.getText().toString());
+                int matchDay = Integer.parseInt(matchDays.getText().toString());
+
+                try {
+                    matchDao.create(new Match("23","tyt",1,2,10,1,1));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
 
             }
@@ -114,6 +148,10 @@ public class CreateMatch extends AppCompatActivity {
     private void intializeCOntrols(){
 
         timeDate = (TextView)findViewById(R.id.editdatetime);
+        matchVenue = (TextView)findViewById(R.id.matchVenue);
+        matchOvers = (TextView)findViewById(R.id.matchOvers);
+        matchInns = (TextView)findViewById(R.id.matchInns);
+        matchDays = (TextView)findViewById(R.id.matchDays);
         selectHome= (Button)findViewById(R.id.selectHomeTeam);
         selectAway =(Button)findViewById(R.id.selectAwayTeam);
         startMatch = (Button)findViewById(R.id.matchStart);
@@ -190,15 +228,18 @@ private void alertDialog(View v) {
         });
     }
 
-    public void createTeamDao() {
+    public void createAllDao() {
         try {
             teamDao = getHelper().getTeamDao();
+            matchDao = getHelper().getMatchDao();
+            playerDao = getHelper().getPlayerDao();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
+
     private DataBaseHelper getHelper() {
         if (dataBaseHelper == null) {
             dataBaseHelper = OpenHelperManager.getHelper(this, DataBaseHelper.class);
@@ -215,6 +256,21 @@ private void alertDialog(View v) {
             dataBaseHelper = null;
         }
     }
+
+    private PreparedQuery<Team> queryforTeam(String teamname) {
+
+        QueryBuilder<Team, Integer> qb = teamDao.queryBuilder();
+        PreparedQuery<Team> newQ = null;
+        try {
+            qb.where().eq("teamName", teamname);
+            newQ = qb.prepare();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return newQ;
+    }
+
     private void msg(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }

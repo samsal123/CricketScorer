@@ -35,4 +35,7 @@ public class Match implements Serializable {
         this.matchInns = matchInns;
         this.matchDays = matchDays;
     }
+
+    public Match() {
+    }
 }
