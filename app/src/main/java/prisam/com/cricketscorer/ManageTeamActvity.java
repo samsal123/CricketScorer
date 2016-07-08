@@ -60,6 +60,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
                     e.printStackTrace();
                 }
                 hideKeyBoard();
+                teamName.setText("");
                 showTeams();
             }
         });

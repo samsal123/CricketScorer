@@ -85,6 +85,8 @@ public class AddPlayersToTeam extends AppCompatActivity  implements OnCustomClic
 
                 showPlayers();
                 hideKeyBoard();
+                firstName.setText("");
+                lastName.setText("");
 
             }
         });
