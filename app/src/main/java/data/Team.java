@@ -9,7 +9,8 @@ import java.io.Serializable;
  */
 public class Team implements Serializable {
 
-
+    public Team() {
+    }
 
     @DatabaseField(generatedId = true)
     public int TeamID;
@@ -29,7 +30,14 @@ public class Team implements Serializable {
 
     }
 
-    public Team() {
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Team) {
+            if (teamName.equals(((Team) o).teamName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

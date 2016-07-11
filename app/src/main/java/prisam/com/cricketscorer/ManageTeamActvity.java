@@ -27,7 +27,7 @@ import data.Team;
 public class ManageTeamActvity extends AppCompatActivity implements OnCustomClickListener {
 
     private DataBaseHelper dataBaseHelper = null;
-    public Dao<Team, Integer> teamDao = null;
+    private Dao<Team, Integer> teamDao = null;
     private EditText teamName;
     private Button addTeam;
     public ListView teamView;
@@ -36,7 +36,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
     @Override
     public void OnCustomClick(View aView, int position) {
         deleteTeam(position);
-        //Toast.makeText(this, teamName.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Team deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -52,16 +52,28 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
             @Override
             public void onClick(View view) {
 
-                String team = teamName.getText().toString();
+                String team = teamName.getText().toString().trim();
 
-                try {
-                    teamDao.create(new Team(team));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if(team.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter a valid team name.", Toast.LENGTH_SHORT).show();
                 }
-                hideKeyBoard();
-                teamName.setText("");
-                showTeams();
+                else {
+                    try {
+                        Team newTeam = new Team(team);
+                        List<Team> teams = teamDao.queryForAll();
+                        if(teams.contains(newTeam)){
+                            Toast.makeText(getApplicationContext(), "Team already exists!", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            teamDao.create(newTeam);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    hideKeyBoard();
+                    teamName.setText("");
+                    showTeams();
+                }
             }
         });
 
@@ -85,7 +97,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     private void hideKeyBoard() {
@@ -146,6 +157,5 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
     private void msg(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
-
 
 }

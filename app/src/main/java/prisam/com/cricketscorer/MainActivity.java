@@ -31,15 +31,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        dbView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent dbmanager = new Intent(MainActivity.this,AndroidDatabaseManager.class);
-                startActivity(dbmanager);
-            }
-        });
-
         connectBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        dbView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-
+                Intent dbmanager = new Intent(MainActivity.this,AndroidDatabaseManager.class);
+                startActivity(dbmanager);
+            }
+        });
     }
-
-
 
     public void initialiseControls(){
 
