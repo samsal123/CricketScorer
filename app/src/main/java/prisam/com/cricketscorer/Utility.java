@@ -1,8 +1,8 @@
 package prisam.com.cricketscorer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 
 import data.Team;
 
@@ -23,8 +23,9 @@ public class Utility {
 
     public static void displayPlayers(){
 
-        AddPlayersToTeam adp = new AddPlayersToTeam();
+        AddPlayersToTeamActivity adp = new AddPlayersToTeamActivity();
 
         adp.showPlayers();
     }
+
 }

@@ -63,7 +63,6 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         // set the text for the team name
         teamName.setText(team.teamName);
 
-
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,10 +73,12 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addPlayersToTeamIntent = new Intent(context, AddPlayersToTeam.class);//.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Intent addPlayersToTeamIntent = new Intent(context, AddPlayersToTeamActivity.class);//.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 addPlayersToTeamIntent.putExtra("TeamName", getItem(position).teamName);
                 addPlayersToTeamIntent.putExtra("TeamID",getItem(position).TeamID);
                 context.startActivity(addPlayersToTeamIntent);
+
             }
         });
 

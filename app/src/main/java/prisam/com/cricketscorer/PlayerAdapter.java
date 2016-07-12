@@ -9,18 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-import data.DataBaseHelper;
 import data.Player;
 import data.Team;
 
@@ -29,32 +22,30 @@ import data.Team;
  */
 public class PlayerAdapter extends ArrayAdapter<Player> {
 
+    private Button btnDelete;
+    private Button btnEdit;
+    private TextView playerName;
+    private TextView playerTeam;
 
-
-    Button btnDelete;
-    Button btnEdit;
-    TextView playerName;
-    TextView playerTeam;
-    Player player;
+    private Team team;
+    private Player player;
     private ArrayList<Player> players;
-
-
     private LayoutInflater mInflater;
+
     private OnCustomClickListener callback;
 
-    public PlayerAdapter(Context context, ArrayList<Player> players, OnCustomClickListener callback) {
+    public PlayerAdapter(Context context, ArrayList<Player> players, OnCustomClickListener callback, Team team) {
         super(context, 0, players);
         mInflater = LayoutInflater.from(context);
         this.callback = callback;
         this.players = players;
+        this.team = team;
     }
 
     // View lookup cache
     private static class ViewHolder {
         TextView name;
     }
-
-
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -65,7 +56,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.playerlist,null);
+            convertView = mInflater.inflate(R.layout.playerlist, null);
             viewHolder.name = (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(viewHolder);
         } else {
@@ -75,8 +66,8 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         initialiseControls(convertView);
 
         // set the text for the team name
-        playerTeam.setText(player.playerTeamID+"");
-        playerName.setText(player.firstName+" "+player.lastName);
+        playerTeam.setText(team.teamName + "");
+        playerName.setText(player.firstName + " " + player.lastName);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +79,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeam.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeamActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 addPlayersToTeamIntent.putExtra("Player", player);
                 getContext().startActivity(addPlayersToTeamIntent);
             }
@@ -100,7 +91,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
     public void showDialog(final View view, final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setMessage("Are you sure to delete  '" + getItem(position).firstName + " "+getItem(position).lastName+"' ?");
+        alertDialogBuilder.setMessage("Are you sure to delete  '" + getItem(position).firstName + " " + getItem(position).lastName + "' ?");
 
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -120,9 +111,9 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         alertDialog.show();
     }
 
-    private void initialiseControls(View convertView){
+    private void initialiseControls(View convertView) {
         playerTeam = (TextView) convertView.findViewById(R.id.txtPlayertTeamName);
-        playerName = (TextView)convertView.findViewById(R.id.listPlayerName);
+        playerName = (TextView) convertView.findViewById(R.id.listPlayerName);
         btnDelete = (Button) convertView.findViewById(R.id.del);
         btnEdit = (Button) convertView.findViewById(R.id.edit);
     }
@@ -130,6 +121,5 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     private void msg(String s) {
         Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
     }
-
 
 }

@@ -9,8 +9,6 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
-
-
     @DatabaseField(generatedId = true)
     public int playerId;
 
@@ -20,19 +18,23 @@ public class Player implements Serializable {
     @DatabaseField
     public String lastName;
 
-    @DatabaseField
-    public int playerTeamID;
+    //@DatabaseField
+    //public int playerTeamID;
+
     @DatabaseField
     public boolean playing;
 
-    public Player( String firstName,String lastName,int playerTeamID) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.playerTeamID = playerTeamID;
-
-    }
-
+    // Foreign key defined to hold associations for players with team
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true, maxForeignAutoRefreshLevel=3)
+    public Team team;
 
     public Player() {
+    }
+
+    public Player( String firstName, String lastName, Team team) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.team = team;
+        //this.playerTeamID = playerTeamID;
     }
 }

@@ -9,25 +9,23 @@ import java.io.Serializable;
  */
 public class Team implements Serializable {
 
-    public Team() {
-    }
-
     @DatabaseField(generatedId = true)
     public int TeamID;
 
     @DatabaseField
     public String teamName;
 
-    @DatabaseField
-    public boolean toss;
-    @DatabaseField
-    public boolean isBat;
+//    @DatabaseField
+//    public boolean toss;
+//
+//    @DatabaseField
+//    public boolean isBat;
+
+    public Team() {
+    }
 
     public Team(String teamName) {
-
        this.teamName =teamName;
-
-
     }
 
     @Override

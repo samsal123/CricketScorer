@@ -1,5 +1,5 @@
 #
-# generated on 2016/07/08 11:07:22
+# generated on 2016/07/12 05:52:15
 #
 # --table-start--
 dataClass=data.Team
@@ -11,12 +11,6 @@ generatedId=true
 # --field-end--
 # --field-start--
 fieldName=teamName
-# --field-end--
-# --field-start--
-fieldName=toss
-# --field-end--
-# --field-start--
-fieldName=isBat
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -36,10 +30,14 @@ fieldName=firstName
 fieldName=lastName
 # --field-end--
 # --field-start--
-fieldName=playerTeamID
+fieldName=playing
 # --field-end--
 # --field-start--
-fieldName=playing
+fieldName=team
+canBeNull=false
+foreign=true
+foreignAutoRefresh=true
+maxForeignAutoRefreshLevel=3
 # --field-end--
 # --table-fields-end--
 # --table-end--

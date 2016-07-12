@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 
 import java.sql.SQLException;
@@ -21,16 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.DataBaseHelper;
+import data.Player;
 import data.Team;
 
 
 public class ManageTeamActvity extends AppCompatActivity implements OnCustomClickListener {
 
     private DataBaseHelper dataBaseHelper = null;
-    private Dao<Team, Integer> teamDao = null;
     private EditText teamName;
     private Button addTeam;
-    public ListView teamView;
+    private ListView teamView;
     private Button back;
 
     @Override
@@ -44,7 +43,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_team_actvity);
 
-        createTeamDao();
         initialiseControls();
         hideKeyBoard();
 
@@ -60,12 +58,12 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
                 else {
                     try {
                         Team newTeam = new Team(team);
-                        List<Team> teams = teamDao.queryForAll();
+                        List<Team> teams = dataBaseHelper.getTeamDao().queryForAll();
                         if(teams.contains(newTeam)){
                             Toast.makeText(getApplicationContext(), "Team already exists!", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            teamDao.create(newTeam);
+                            dataBaseHelper.getTeamDao().create(newTeam);
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -90,15 +88,6 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         showTeams();
     }
 
-    public void createTeamDao() {
-        try {
-            teamDao = getHelper().getTeamDao();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(teamName.getWindowToken(),
@@ -108,7 +97,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
     public void showTeams() {
         try {
 
-            List<Team> teams = teamDao.queryForAll();
+            List<Team> teams = dataBaseHelper.getTeamDao().queryForAll();
             TeamAdapter a = new TeamAdapter(ManageTeamActvity.this, (ArrayList<Team>) teams, this);
             teamView.setAdapter(a);
 
@@ -117,7 +106,7 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         }
     }
 
-    private DataBaseHelper getHelper() {
+    private DataBaseHelper getDBHelper() {
         if (dataBaseHelper == null) {
             dataBaseHelper = OpenHelperManager.getHelper(this, DataBaseHelper.class);
         }
@@ -140,18 +129,25 @@ public class ManageTeamActvity extends AppCompatActivity implements OnCustomClic
         addTeam = (Button) findViewById(R.id.refresh);
         teamView = (ListView) findViewById(R.id.listView);
         back = (Button)findViewById(R.id.back);
+        dataBaseHelper = getDBHelper();
 
     }
 
     public void deleteTeam(int teamID) {
-        DeleteBuilder<Team, Integer> deleteBuilder = teamDao.deleteBuilder();
+
         try {
+            DeleteBuilder<Team, Integer> deleteBuilder = dataBaseHelper.getTeamDao().deleteBuilder();
             deleteBuilder.where().eq("TeamID", teamID);
+
+            //get all players for the team id
+            //List<Player> playersTobeDeleted =  dataBaseHelper.getPlayerDao().queryBuilder().where().eq("team_id", teamID).query();
+            //dataBaseHelper.getPlayerDao().delete(playersTobeDeleted);
+
+            //then delete the team
             deleteBuilder.delete();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     private void msg(String s) {

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ManageTeamActvity" />
-        <activity android:name=".AddPlayersToTeam" />
+        <activity android:name=".AddPlayersToTeamActivity" />
         <activity
             android:name=".AndroidDatabaseManager"
             android:theme="@style/Theme.AppCompat.Light" />
