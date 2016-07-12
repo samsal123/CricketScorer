@@ -25,7 +25,7 @@ import java.util.UUID;
 //import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class ScoreAndControlDisplay extends AppCompatActivity {
+public class ScoreAndControlDisplayActivity extends AppCompatActivity {
 
     Button btnOn, btnOff, btnDis;
     SeekBar brightness;
@@ -40,18 +40,18 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
 
     //SPP UUID. Look for it
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     //private GoogleApiClient client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent newint = getIntent();
-        address = newint.getStringExtra(DeviceList.EXTRA_ADDRESS); //receive the address of the bluetooth device
+        address = newint.getStringExtra(DeviceListActivity.EXTRA_ADDRESS); //receive the address of the bluetooth device
 
 
         //view of the ledControl
@@ -63,29 +63,27 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
         TextView striker = (TextView) findViewById(R.id.striker);
         TextView nonStriker = (TextView) findViewById(R.id.nonStriker);
 
-        striker.setOnClickListener(new View.OnClickListener(){public void onClick(View v)
+        striker.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
 
-        {
-            isStriker = true;
-            selectBatsmen();
+            {
+                isStriker = true;
+                selectBatsmen();
 
-        }
-
-
-        });
-        nonStriker.setOnClickListener(new View.OnClickListener(){public void onClick(View v)
-
-        {
-            selectBatsmen();
-
-        }
+            }
 
 
         });
+        nonStriker.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+
+            {
+                selectBatsmen();
+
+            }
 
 
-
-
+        });
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -94,14 +92,7 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-    public void selectBatsmen()
-    {
+    public void selectBatsmen() {
 
         ListView s1 = (ListView) findViewById(R.id.listView2);
         s1.setVisibility(View.VISIBLE);
@@ -113,10 +104,10 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
     int totalOvers = 0;
     int ballCount = 0;
     int wicketsDown = 0;
-    int strikerRuns =0;
-    int stikerBalls=0;
-    int nonStrikerRuns=0;
-    int nonStrikerBalls =0;
+    int strikerRuns = 0;
+    int stikerBalls = 0;
+    int nonStrikerRuns = 0;
+    int nonStrikerBalls = 0;
     boolean swap = true;
 
     public void btnClick(View v) {
@@ -127,13 +118,11 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
             case R.id.btn1Run:
                 totalRuns++;
                 countBall();
-                if(swap) {
+                if (swap) {
                     strikerRuns++;
                     stikerBalls++;
                     swap = !swap;
-                }
-                else
-                {
+                } else {
                     nonStrikerRuns++;
                     nonStrikerBalls++;
                     swap = !swap;
@@ -142,14 +131,12 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
                 break;
             case R.id.btn2Run:
                 totalRuns += 2;
-                if(swap) {
-                    strikerRuns+=2;
+                if (swap) {
+                    strikerRuns += 2;
                     stikerBalls++;
 
-                }
-                else
-                {
-                    nonStrikerRuns+=2;
+                } else {
+                    nonStrikerRuns += 2;
                     nonStrikerBalls++;
 
 
@@ -158,14 +145,12 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
                 break;
             case R.id.btn3Run:
                 totalRuns += 3;
-                if(swap) {
-                    strikerRuns+=3;
+                if (swap) {
+                    strikerRuns += 3;
                     stikerBalls++;
                     swap = !swap;
-                }
-                else
-                {
-                    nonStrikerRuns+=3;
+                } else {
+                    nonStrikerRuns += 3;
                     nonStrikerBalls++;
                     swap = !swap;
 
@@ -174,14 +159,12 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
                 break;
             case R.id.btn4Run:
                 totalRuns += 4;
-                if(swap) {
-                    strikerRuns+=4;
+                if (swap) {
+                    strikerRuns += 4;
                     stikerBalls++;
 
-                }
-                else
-                {
-                    nonStrikerRuns+=4;
+                } else {
+                    nonStrikerRuns += 4;
                     nonStrikerBalls++;
 
 
@@ -193,14 +176,12 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
                 break;
             case R.id.btn6Run:
                 totalRuns += 6;
-                if(swap) {
-                    strikerRuns+=6;
+                if (swap) {
+                    strikerRuns += 6;
                     stikerBalls++;
 
-                }
-                else
-                {
-                    nonStrikerRuns+=6;
+                } else {
+                    nonStrikerRuns += 6;
                     nonStrikerBalls++;
 
 
@@ -257,8 +238,6 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
     }
 
 
-
-
     String displayTotal = "";
     String dispOver = "";
 
@@ -269,16 +248,16 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
         displayTotal = totalRuns + "/" + wicketsDown + " ";
         displayOver.setText(totalOvers + "." + ballCount);
         TextView strikerRunsDisplay = (TextView) findViewById(R.id.txtStrikerRuns);
-        strikerRunsDisplay.setText(strikerRuns+"("+stikerBalls+")");
+        strikerRunsDisplay.setText(strikerRuns + "(" + stikerBalls + ")");
         TextView nonStrikerRunsDisplay = (TextView) findViewById(R.id.txtNonStrikerRuns);
-        nonStrikerRunsDisplay.setText(nonStrikerRuns+"("+nonStrikerBalls+")");
-        dispOver = totalOvers + "." + ballCount ;
+        nonStrikerRunsDisplay.setText(nonStrikerRuns + "(" + nonStrikerBalls + ")");
+        dispOver = totalOvers + "." + ballCount;
 
         TextView striker = (TextView) findViewById(R.id.striker);
         TextView nonStriker = (TextView) findViewById(R.id.nonStriker);
 
-        dispOver+= "#"+striker.getText().toString()+" "+strikerRunsDisplay.getText().toString()+"  " +
-                ""+nonStriker.getText().toString()+" "+nonStrikerRunsDisplay.getText().toString();
+        dispOver += "#" + striker.getText().toString() + " " + strikerRunsDisplay.getText().toString() + "  " +
+                "" + nonStriker.getText().toString() + " " + nonStrikerRunsDisplay.getText().toString();
 
         sendTotal();
         sendOvers(dispOver);
@@ -377,15 +356,13 @@ public class ScoreAndControlDisplay extends AppCompatActivity {
     }
 
 
-
-
     private class ConnectBT extends AsyncTask<Void, Void, Void>  // UI thread
     {
         private boolean ConnectSuccess = true; //if it's here, it's almost connected
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(ScoreAndControlDisplay.this, "Connecting...", "Please wait!!!");  //show a progress dialog
+            progress = ProgressDialog.show(ScoreAndControlDisplayActivity.this, "Connecting...", "Please wait!!!");  //show a progress dialog
         }
 
         @Override

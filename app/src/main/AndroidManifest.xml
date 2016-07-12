@@ -23,8 +23,8 @@
         <activity
             android:name=".AndroidDatabaseManager"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".DeviceList" />
-        <activity android:name=".ScoreAndControlDisplay" />
+        <activity android:name=".DeviceListActivity" />
+        <activity android:name=".ScoreAndControlDisplayActivity" />
         <activity android:name=".MatchSetupActivity"></activity>
     </application>
 

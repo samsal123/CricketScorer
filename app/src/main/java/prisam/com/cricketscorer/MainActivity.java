@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent newint = new Intent(MainActivity.this,ManageTeamActvity.class);
+                Intent newint = new Intent(MainActivity.this, ManageTeamActvity.class);
                 startActivity(newint);
 
             }
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent newint = new Intent(MainActivity.this,DeviceList.class);
+                Intent newint = new Intent(MainActivity.this, DeviceListActivity.class);
                 startActivity(newint);
             }
         });
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent scorecard = new Intent(MainActivity.this,ScoreAndControlDisplay.class);
+                Intent scorecard = new Intent(MainActivity.this, ScoreAndControlDisplayActivity.class);
                 startActivity(scorecard);
             }
         });
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent matchsetup = new Intent(MainActivity.this,MatchSetupActivity.class);
+                Intent matchsetup = new Intent(MainActivity.this, MatchSetupActivity.class);
                 startActivity(matchsetup);
             }
         });
@@ -61,22 +61,21 @@ public class MainActivity extends AppCompatActivity {
         dbView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent dbmanager = new Intent(MainActivity.this,AndroidDatabaseManager.class);
+                Intent dbmanager = new Intent(MainActivity.this, AndroidDatabaseManager.class);
                 startActivity(dbmanager);
             }
         });
     }
 
-    public void initialiseControls(){
+    public void initialiseControls() {
 
-        manageTeam = (Button)findViewById(R.id.btnManageTeam);
-        connectBt = (Button)findViewById(R.id.btnConnect);
-        dbView = (Button)findViewById(R.id.dbView);
-        gotoMatch = (Button)findViewById(R.id.btnMatch);
-        matchSetup = (Button)findViewById(R.id.matchSetup);
+        manageTeam = (Button) findViewById(R.id.btnManageTeam);
+        connectBt = (Button) findViewById(R.id.btnConnect);
+        dbView = (Button) findViewById(R.id.dbView);
+        gotoMatch = (Button) findViewById(R.id.btnMatch);
+        matchSetup = (Button) findViewById(R.id.matchSetup);
 
     }
-
 
 
 }
