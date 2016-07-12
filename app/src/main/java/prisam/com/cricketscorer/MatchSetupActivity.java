@@ -28,7 +28,7 @@ import data.Match;
 import data.Player;
 import data.Team;
 
-public class CreateMatch extends AppCompatActivity {
+public class MatchSetupActivity extends AppCompatActivity {
 
     private TextView timeDate;
     private TextView matchVenue;
@@ -44,11 +44,9 @@ public class CreateMatch extends AppCompatActivity {
     private ToggleButton option;
     private SeekBar toss;
     private DataBaseHelper dataBaseHelper = null;
-    public Dao<Team, Integer> teamDao = null;
-    public Dao<Match,Integer> matchDao = null;
-    public Dao<Player,Integer> playerDao=null;
-
-
+//    public Dao<Team, Integer> teamDao = null;
+//    public Dao<Match, Integer> matchDao = null;
+//    public Dao<Player, Integer> playerDao = null;
 
 
     @Override
@@ -57,23 +55,21 @@ public class CreateMatch extends AppCompatActivity {
         setContentView(R.layout.activity_create_match);
 
         intializeCOntrols();
-       createAllDao();
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy   HH:mm ");
-        timeDate.setText( sdf.format( new Date() ));
+        timeDate.setText(sdf.format(new Date()));
         selectHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-              alertDialog(view);
+                alertDialog(view);
 
             }
         });
         selectAway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               alertDialog(view);
+                alertDialog(view);
 
 
             }
@@ -84,18 +80,20 @@ public class CreateMatch extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                int homeTeamID = 0;
+                int awayTeamID = 0;
 
                 String matchDateTime = timeDate.getText().toString();
                 String matchPlace = matchVenue.getText().toString();
                 try {
-                    homeTeam = teamDao.query(queryforTeam(selectHome.getText().toString()));
-                   int  homeTeamID = homeTeam.get(0).TeamID;
+                    homeTeam = dataBaseHelper.getTeamDao().query(queryforTeam(selectHome.getText().toString()));
+                    homeTeamID = homeTeam.get(0).TeamID;
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 try {
-                     awayTeam = teamDao.query(queryforTeam(selectAway.getText().toString()));
-                     int awayTeamID = awayTeam.get(0).TeamID;
+                    awayTeam = dataBaseHelper.getTeamDao().query(queryforTeam(selectAway.getText().toString()));
+                    awayTeamID = awayTeam.get(0).TeamID;
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -105,7 +103,7 @@ public class CreateMatch extends AppCompatActivity {
                 int matchDay = Integer.parseInt(matchDays.getText().toString());
 
                 try {
-                    matchDao.create(new Match("23","tyt",1,2,10,1,1));
+                    dataBaseHelper.getMatchDao().create(new Match(matchDateTime, matchPlace, homeTeamID, awayTeamID, matchOver, matchInn, matchDay));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -118,7 +116,7 @@ public class CreateMatch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent main = new Intent(CreateMatch.this, MainActivity.class );
+                Intent main = new Intent(MatchSetupActivity.this, MainActivity.class);
 
                 startActivity(main);
             }
@@ -127,8 +125,8 @@ public class CreateMatch extends AppCompatActivity {
         toss.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(toss.getProgress()>50)toss.setProgress(100);
-                if(toss.getProgress()<50)toss.setProgress(0);
+                if (toss.getProgress() > 50) toss.setProgress(100);
+                if (toss.getProgress() < 50) toss.setProgress(0);
             }
 
             @Override
@@ -145,80 +143,81 @@ public class CreateMatch extends AppCompatActivity {
     }
 
 
-    private void intializeCOntrols(){
+    private void intializeCOntrols() {
 
-        timeDate = (TextView)findViewById(R.id.editdatetime);
-        matchVenue = (TextView)findViewById(R.id.matchVenue);
-        matchOvers = (TextView)findViewById(R.id.matchOvers);
-        matchInns = (TextView)findViewById(R.id.matchInns);
-        matchDays = (TextView)findViewById(R.id.matchDays);
-        selectHome= (Button)findViewById(R.id.selectHomeTeam);
-        selectAway =(Button)findViewById(R.id.selectAwayTeam);
-        startMatch = (Button)findViewById(R.id.matchStart);
-        option = (ToggleButton)findViewById(R.id.toggleButton);
-        toss = (SeekBar)findViewById(R.id.seekBar);
-        back = (Button)findViewById(R.id.backfromCreateMatch);
-
-
+        timeDate = (TextView) findViewById(R.id.editdatetime);
+        matchVenue = (TextView) findViewById(R.id.matchVenue);
+        matchOvers = (TextView) findViewById(R.id.matchOvers);
+        matchInns = (TextView) findViewById(R.id.matchInns);
+        matchDays = (TextView) findViewById(R.id.matchDays);
+        selectHome = (Button) findViewById(R.id.selectHomeTeam);
+        selectAway = (Button) findViewById(R.id.selectAwayTeam);
+        startMatch = (Button) findViewById(R.id.matchStart);
+        option = (ToggleButton) findViewById(R.id.toggleButton);
+        toss = (SeekBar) findViewById(R.id.seekBar);
+        back = (Button) findViewById(R.id.backfromCreateMatch);
+        dataBaseHelper = getDBHelper();
 
     }
 
-
-
-private void alertDialog(View v) {
-
-    final Button b1 = (Button)v;
-    AlertDialog.Builder builderSingle = new AlertDialog.Builder(CreateMatch.this);
-    builderSingle.setIcon(R.drawable.ic_launcher);
-
-
-    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-            CreateMatch.this,
-            android.R.layout.select_dialog_singlechoice);
-    try {
-        List<Team> teams = teamDao.queryForAll();
-        if (teams.size() != 0) {
-            for (int i = 0; i < teams.size(); i++) {
-                arrayAdapter.add(teams.get(i).teamName);
-            }
+    private DataBaseHelper getDBHelper() {
+        if (dataBaseHelper == null) {
+            dataBaseHelper = OpenHelperManager.getHelper(this, DataBaseHelper.class);
         }
-        else msg("Please add Teams");
-        }catch(SQLException e){
+        return dataBaseHelper;
+    }
+
+
+    private void alertDialog(View v) {
+
+        final Button b1 = (Button) v;
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MatchSetupActivity.this);
+        builderSingle.setIcon(R.drawable.ic_launcher);
+
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                MatchSetupActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        try {
+            List<Team> teams = dataBaseHelper.getTeamDao().queryForAll();
+            if (teams.size() != 0) {
+                for (int i = 0; i < teams.size(); i++) {
+                    arrayAdapter.add(teams.get(i).teamName);
+                }
+            } else msg("Please add Teams");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-    builderSingle.setTitle("Select One Team:-");
+        builderSingle.setTitle("Select One Team:-");
 
-    builderSingle.setNegativeButton(
-            "cancel",
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+        builderSingle.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
-    builderSingle.setAdapter(
-            arrayAdapter,
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String strName = arrayAdapter.getItem(which);
-                    b1.setText(strName);
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = arrayAdapter.getItem(which);
+                        b1.setText(strName);
 
-                }
+                    }
 
-            });
-    builderSingle.show();
-
+                });
+        builderSingle.show();
 
     }
 
-
-
     private void alertDialogSameTeam() {
 
-        AlertDialog.Builder ale = new AlertDialog.Builder(CreateMatch.this);
+        AlertDialog.Builder ale = new AlertDialog.Builder(MatchSetupActivity.this);
         ale.setTitle("You have selected Same teams please select different Teams");
         ale.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -226,18 +225,6 @@ private void alertDialog(View v) {
 
             }
         });
-    }
-
-    public void createAllDao() {
-        try {
-            teamDao = getHelper().getTeamDao();
-            matchDao = getHelper().getMatchDao();
-            playerDao = getHelper().getPlayerDao();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private DataBaseHelper getHelper() {
@@ -259,9 +246,9 @@ private void alertDialog(View v) {
 
     private PreparedQuery<Team> queryforTeam(String teamname) {
 
-        QueryBuilder<Team, Integer> qb = teamDao.queryBuilder();
         PreparedQuery<Team> newQ = null;
         try {
+            QueryBuilder<Team, Integer> qb = dataBaseHelper.getTeamDao().queryBuilder();
             qb.where().eq("teamName", teamname);
             newQ = qb.prepare();
         } catch (SQLException e) {

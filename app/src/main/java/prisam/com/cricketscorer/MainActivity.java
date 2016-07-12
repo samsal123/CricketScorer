@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent matchsetup = new Intent(MainActivity.this,CreateMatch.class);
+                Intent matchsetup = new Intent(MainActivity.this,MatchSetupActivity.class);
                 startActivity(matchsetup);
             }
         });

@@ -91,8 +91,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     public Dao<Match, Integer> getMatchDao() throws SQLException {
-        if (playerDao == null) {
-            playerDao = getDao(Player.class);
+        if (matchDao == null) {
+            matchDao = getDao(Match.class);
         }
 
         return matchDao;
