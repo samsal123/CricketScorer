@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.TeamAdapter;
+import Helpers.OnCustomClickListener;
 import data.DataBaseHelper;
 import data.Team;
 

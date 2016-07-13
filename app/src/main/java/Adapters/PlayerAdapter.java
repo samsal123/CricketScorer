@@ -1,4 +1,4 @@
-package prisam.com.cricketscorer;
+package Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import Helpers.OnCustomClickListener;
 import data.Player;
 import data.Team;
+import prisam.com.cricketscorer.AddPlayersToTeamActivity;
+import prisam.com.cricketscorer.R;
 
 /**
  * Created by Prince on 5/07/2016.

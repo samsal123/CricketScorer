@@ -1,4 +1,4 @@
-package prisam.com.cricketscorer;
+package Helpers;
 
 import android.view.View;
 

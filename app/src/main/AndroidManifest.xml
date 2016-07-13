@@ -21,7 +21,7 @@
         <activity android:name=".ManageTeamActvity" />
         <activity android:name=".AddPlayersToTeamActivity" />
         <activity
-            android:name=".AndroidDatabaseManager"
+            android:name=".AndroidDatabaseManagerActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".DeviceListActivity" />
         <activity android:name=".ScoreAndControlDisplayActivity" />

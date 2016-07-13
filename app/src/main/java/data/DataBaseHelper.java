@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.util.Log;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -18,8 +17,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import prisam.com.cricketscorer.R;
-
-//import com.j256.ormlite.logger.Log;
 
 /**
  * Created by Prince on 2/07/2016.

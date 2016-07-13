@@ -13,13 +13,14 @@ import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.PlayerAdapter;
+import Helpers.OnCustomClickListener;
 import data.DataBaseHelper;
 import data.Player;
 import data.Team;

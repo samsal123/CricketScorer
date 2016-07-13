@@ -1,11 +1,11 @@
-package prisam.com.cricketscorer;
+package Helpers;
 
 import android.view.View;
 
 /**
  * Created by Sameer.Salim on 06/07/2016.
  */
-public class CustomOnClickListener implements View.OnClickListener{
+public class CustomOnClickListener implements View.OnClickListener {
     private int position;
     private OnCustomClickListener callback;
 

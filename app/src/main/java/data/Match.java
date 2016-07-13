@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Match implements Serializable {
 
-    @DatabaseField (generatedId = true)
+    @DatabaseField(generatedId = true)
     public int matchID;
     @DatabaseField
     public String matchDateTime;

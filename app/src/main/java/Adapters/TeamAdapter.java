@@ -1,4 +1,4 @@
-package prisam.com.cricketscorer;
+package Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
+import Helpers.OnCustomClickListener;
 import data.Team;
+import prisam.com.cricketscorer.AddPlayersToTeamActivity;
+import prisam.com.cricketscorer.R;
 
 /**
  * Created by z3004590 on 5/07/2016.
@@ -76,7 +80,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
                 Intent addPlayersToTeamIntent = new Intent(context, AddPlayersToTeamActivity.class);//.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 addPlayersToTeamIntent.putExtra("TeamName", getItem(position).teamName);
-                addPlayersToTeamIntent.putExtra("TeamID",getItem(position).TeamID);
+                addPlayersToTeamIntent.putExtra("TeamID", getItem(position).TeamID);
                 context.startActivity(addPlayersToTeamIntent);
 
             }
@@ -108,7 +112,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         alertDialog.show();
     }
 
-    private void initialiseControls(View convertView){
+    private void initialiseControls(View convertView) {
         teamName = (TextView) convertView.findViewById(R.id.textView);
         btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
         btnEdit = (Button) convertView.findViewById(R.id.btnEdit);

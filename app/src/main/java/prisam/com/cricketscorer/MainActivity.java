@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         dbView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent dbmanager = new Intent(MainActivity.this, AndroidDatabaseManager.class);
+                Intent dbmanager = new Intent(MainActivity.this, AndroidDatabaseManagerActivity.class);
                 startActivity(dbmanager);
             }
         });
