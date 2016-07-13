@@ -25,7 +25,8 @@
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".DeviceListActivity" />
         <activity android:name=".ScoreAndControlDisplayActivity" />
-        <activity android:name=".MatchSetupActivity"></activity>
+        <activity android:name=".MatchSetupActivity" />
+        <activity android:name=".BluetoothActivity"></activity>
     </application>
 
 </manifest>
