@@ -13,10 +13,10 @@ public class Player implements Serializable {
     public int playerId;
 
     @DatabaseField
-    public String firstName;
+    public String fullname;
 
     @DatabaseField
-    public String lastName;
+    public String nickName;
 
     //@DatabaseField
     //public int playerTeamID;
@@ -31,9 +31,10 @@ public class Player implements Serializable {
     public Player() {
     }
 
-    public Player(String firstName, String lastName, Team team) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+    public Player(String fullname, String nickName,boolean playing, Team team) {
+        this.fullname = fullname;
+        this.nickName = nickName;
+        this.playing = playing;
         this.team = team;
         //this.playerTeamID = playerTeamID;
     }

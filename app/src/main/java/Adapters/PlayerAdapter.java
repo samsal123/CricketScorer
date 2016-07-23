@@ -2,13 +2,14 @@ package Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import Helpers.OnCustomClickListener;
 import data.Player;
 import data.Team;
-import prisam.com.cricketscorer.AddPlayersToTeamActivity;
 import prisam.com.cricketscorer.R;
 
 /**
@@ -26,9 +26,9 @@ import prisam.com.cricketscorer.R;
 public class PlayerAdapter extends ArrayAdapter<Player> {
 
     private Button btnDelete;
-    private Button btnEdit;
     private TextView playerName;
     private TextView playerTeam;
+    private CheckBox playing;
 
     private Team team;
     private Player player;
@@ -70,7 +70,8 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
         // set the text for the team name
         playerTeam.setText(team.teamName + "");
-        playerName.setText(player.firstName + " " + player.lastName);
+        playerName.setText(player.fullname);
+        playing.setChecked(player.playing);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,14 +80,18 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             }
         });
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+
+
+        playing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent addPlayersToTeamIntent = new Intent(getContext(), AddPlayersToTeamActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                addPlayersToTeamIntent.putExtra("Player", player);
-                getContext().startActivity(addPlayersToTeamIntent);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                player.playing = false;
+                playing.setChecked(false);
+
             }
         });
+
+
 
         // Return the completed view to render on screen
         return convertView;
@@ -94,7 +99,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
     public void showDialog(final View view, final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setMessage("Are you sure to delete  '" + getItem(position).firstName + " " + getItem(position).lastName + "' ?");
+        alertDialogBuilder.setMessage("Are you sure to delete  '" + getItem(position).fullname + " " + "' ?");
 
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -118,7 +123,8 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         playerTeam = (TextView) convertView.findViewById(R.id.txtPlayertTeamName);
         playerName = (TextView) convertView.findViewById(R.id.listPlayerName);
         btnDelete = (Button) convertView.findViewById(R.id.del);
-        btnEdit = (Button) convertView.findViewById(R.id.edit);
+        playing = (CheckBox)convertView.findViewById(R.id.checkBox);
+
     }
 
     private void msg(String s) {

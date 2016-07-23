@@ -40,17 +40,20 @@
             android:layout_height="55dp"
             android:layout_weight="0.79" />
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="47dp"
+            android:text="Playing"
+            android:id="@+id/checkBox"
+            android:checked="true" />
+
         <Button
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:id="@+id/del"
             android:background="@android:drawable/ic_menu_delete" />
 
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit"
-            android:background="@android:drawable/ic_menu_edit" />
+
 
     </LinearLayout>
 

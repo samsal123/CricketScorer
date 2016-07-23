@@ -1,6 +1,8 @@
 package prisam.com.cricketscorer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,14 +31,18 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 
     private DataBaseHelper dataBaseHelper = null;
     private Button btnAddPlayer;
-    private TextView firstName;
-    private TextView lastName;
+    private TextView fullName;
+    private TextView txtnickName;
     private ListView playerList;
     private TextView playerTeam;
     private Button refresh;
     private int teamID;
-    private Player editPlayer;
     private Button back;
+    private String fName;
+    private String nickName;
+    private boolean playing;
+    private List<Player> playersList;
+
 
     public PlayerAdapter a1;
     private List<Team> getTeams;
@@ -46,6 +52,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
     public void OnCustomClick(View aView, int position) {
         deletePlayer(position);
         Toast.makeText(this, "Player deleted.", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -71,24 +78,50 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
             @Override
             public void onClick(View view) {
 
-                String fName = firstName.getText().toString();
-                String lName = lastName.getText().toString();
 
-                try {
+                nickName = txtnickName.getText().toString();
+                if (txtnickName.getText().length() > 4) {
+                    showDialog();
 
-                    dataBaseHelper.getPlayerDao().create(new Player(fName, lName, getTeams.get(0)));
+                } else {
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
+
+
+                    try {
+
+
+                        if(playersList.size()<12) dataBaseHelper.getPlayerDao().create(new Player(fName, nickName,true, getTeams.get(0)));
+                        else dataBaseHelper.getPlayerDao().create(new Player(fName, nickName,false, getTeams.get(0)));
+
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    showPlayers();
+                    hideKeyBoard();
+                    fullName.setText("");
+                    txtnickName.setText("");
+
                 }
+            }
+        });
 
-                showPlayers();
-                hideKeyBoard();
-                firstName.setText("");
-                lastName.setText("");
+        fullName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                fName = fullName.getText().toString();
+
+                if(!b){
+
+                    txtnickName.setText(fName.substring(0,4));
+
+                }
 
             }
         });
+
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,15 +144,15 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 
     private void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(lastName.getWindowToken(),
+        imm.hideSoftInputFromWindow(fullName.getWindowToken(),
                 InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 
     private void initialiseControls() throws SQLException {
         playerTeam = (TextView) findViewById(R.id.txtTeamName);
         btnAddPlayer = (Button) findViewById(R.id.btnAddPlayer);
-        firstName = (TextView) findViewById(R.id.txtFirstName);
-        lastName = (TextView) findViewById(R.id.txtlastname);
+        fullName = (TextView) findViewById(R.id.txtFirstName);
+        txtnickName = (TextView) findViewById(R.id.txtlastname);
         playerList = (ListView) findViewById(R.id.listView2);
         refresh = (Button) findViewById(R.id.refresh);
         back = (Button) findViewById(R.id.btnGoBack);
@@ -129,11 +162,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
         playerTeam.setText(newint.getStringExtra("TeamName"));
         teamID = newint.getIntExtra("TeamID", 0);
 
-        editPlayer = (Player) newint.getSerializableExtra("Player");
-        if (editPlayer != null) {
-            firstName.setText(editPlayer.firstName);
-            lastName.setText(editPlayer.lastName);
-        }
+
 
         dataBaseHelper = getDBHelper();
         getTeams = dataBaseHelper.getTeamDao().queryForEq("teamID", teamID);
@@ -169,7 +198,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
             // construct a query using the QueryBuilder
             QueryBuilder<Player, Integer> statementBuilder = dataBaseHelper.getPlayerDao().queryBuilder();
             statementBuilder.where().eq("team_id", getTeams.get(0).TeamID);
-            List<Player> playersList = dataBaseHelper.getPlayerDao().query(statementBuilder.prepare());
+             playersList = dataBaseHelper.getPlayerDao().query(statementBuilder.prepare());
 
             a1 = new PlayerAdapter(AddPlayersToTeamActivity.this, (ArrayList<Player>) playersList, this, getTeams.get(0));
             playerList.setAdapter(a1);
@@ -210,8 +239,25 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 //        return ppq;
 //    }
 
-    //private void msg(String s) {
-//        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    // }
+    private void showDialog(){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(AddPlayersToTeamActivity.this);
+
+        alert.setTitle("Nick Name");
+        alert.setMessage("Please enter a valid Nick Name with 4 characters");
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                txtnickName.setText(fName.substring(0,4));
+            }
+        });
+
+alert.show();
+
+    }
+
+    private void msg(String s) {
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+     }
 
 }

@@ -1,5 +1,5 @@
 #
-# generated on 2016/07/12 10:36:18
+# generated on 2016/07/21 09:52:20
 #
 # --table-start--
 dataClass=data.Team
@@ -24,10 +24,10 @@ fieldName=playerId
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=firstName
+fieldName=fullname
 # --field-end--
 # --field-start--
-fieldName=lastName
+fieldName=nickName
 # --field-end--
 # --field-start--
 fieldName=playing
