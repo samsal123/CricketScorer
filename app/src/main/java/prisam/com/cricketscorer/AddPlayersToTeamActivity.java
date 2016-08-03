@@ -52,7 +52,6 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
     public void OnCustomClick(View aView, int position) {
         deletePlayer(position);
         Toast.makeText(this, "Player deleted.", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -78,20 +77,15 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
             @Override
             public void onClick(View view) {
 
-
                 nickName = txtnickName.getText().toString();
                 if (txtnickName.getText().length() > 4) {
                     showDialog();
-
                 } else {
-
-
-
                     try {
-
-
-                        if(playersList.size()<12) dataBaseHelper.getPlayerDao().create(new Player(fName, nickName,true, getTeams.get(0)));
-                        else dataBaseHelper.getPlayerDao().create(new Player(fName, nickName,false, getTeams.get(0)));
+                        if (playersList.size() < 12)
+                            dataBaseHelper.getPlayerDao().create(new Player(fName, nickName, true, getTeams.get(0)));
+                        else
+                            dataBaseHelper.getPlayerDao().create(new Player(fName, nickName, false, getTeams.get(0)));
 
 
                     } catch (SQLException e) {
@@ -113,10 +107,8 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 
                 fName = fullName.getText().toString();
 
-                if(!b){
-
-                    txtnickName.setText(fName.substring(0,4));
-
+                if (!b) {
+                    txtnickName.setText(fName.substring(0, 4));
                 }
 
             }
@@ -152,7 +144,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
         playerTeam = (TextView) findViewById(R.id.txtTeamName);
         btnAddPlayer = (Button) findViewById(R.id.btnAddPlayer);
         fullName = (TextView) findViewById(R.id.txtFirstName);
-        txtnickName = (TextView) findViewById(R.id.txtlastname);
+        txtnickName = (TextView) findViewById(R.id.txtLastName);
         playerList = (ListView) findViewById(R.id.listView2);
         refresh = (Button) findViewById(R.id.refresh);
         back = (Button) findViewById(R.id.btnGoBack);
@@ -161,7 +153,6 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 
         playerTeam.setText(newint.getStringExtra("TeamName"));
         teamID = newint.getIntExtra("TeamID", 0);
-
 
 
         dataBaseHelper = getDBHelper();
@@ -198,7 +189,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
             // construct a query using the QueryBuilder
             QueryBuilder<Player, Integer> statementBuilder = dataBaseHelper.getPlayerDao().queryBuilder();
             statementBuilder.where().eq("team_id", getTeams.get(0).TeamID);
-             playersList = dataBaseHelper.getPlayerDao().query(statementBuilder.prepare());
+            playersList = dataBaseHelper.getPlayerDao().query(statementBuilder.prepare());
 
             a1 = new PlayerAdapter(AddPlayersToTeamActivity.this, (ArrayList<Player>) playersList, this, getTeams.get(0));
             playerList.setAdapter(a1);
@@ -239,7 +230,7 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
 //        return ppq;
 //    }
 
-    private void showDialog(){
+    private void showDialog() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(AddPlayersToTeamActivity.this);
 
@@ -248,16 +239,16 @@ public class AddPlayersToTeamActivity extends AppCompatActivity implements OnCus
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                txtnickName.setText(fName.substring(0,4));
+                txtnickName.setText(fName.substring(0, 4));
             }
         });
 
-alert.show();
+        alert.show();
 
     }
 
     private void msg(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-     }
+    }
 
 }

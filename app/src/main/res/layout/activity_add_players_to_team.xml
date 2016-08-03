@@ -84,7 +84,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtlastname"
+            android:id="@+id/txtLastName"
             android:inputType="textCapSentences"
             android:layout_weight="1" />
 

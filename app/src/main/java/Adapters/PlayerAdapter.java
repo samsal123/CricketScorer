@@ -70,7 +70,11 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
         // set the text for the team name
         playerTeam.setText(team.teamName + "");
-        playerName.setText(player.fullname);
+        if (player.fullname != null) {
+            playerName.setText(player.fullname);
+        } else {
+            playerName.setText(player.nickName);
+        }
         playing.setChecked(player.playing);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -81,17 +85,13 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         });
 
 
-
         playing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 player.playing = false;
                 playing.setChecked(false);
-
             }
         });
-
-
 
         // Return the completed view to render on screen
         return convertView;
@@ -120,10 +120,10 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     }
 
     private void initialiseControls(View convertView) {
-        playerTeam = (TextView) convertView.findViewById(R.id.txtPlayertTeamName);
+        playerTeam = (TextView) convertView.findViewById(R.id.txtPlayerTeamName);
         playerName = (TextView) convertView.findViewById(R.id.listPlayerName);
         btnDelete = (Button) convertView.findViewById(R.id.del);
-        playing = (CheckBox)convertView.findViewById(R.id.checkBox);
+        playing = (CheckBox) convertView.findViewById(R.id.checkBox);
 
     }
 
